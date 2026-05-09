@@ -233,6 +233,66 @@
             overflow: hidden;
         }
 
+        .love-section {
+            margin-top: 50px;
+            padding: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .love-section h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 30px;
+            color: var(--accent-primary);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            height: 60px;
+            position: relative;
+        }
+
+        .love-btn {
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .yes-btn {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            background: #ff1493;
+        }
+
+        .no-btn {
+            background: #eee;
+            color: #666;
+            position: absolute;
+            transition: all 0.2s ease;
+        }
+
+        .love-response {
+            margin-top: 20px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-size: 1.2rem;
+            min-height: 1.5em;
+        }
+
         .final-card::before {
             content: "♥";
             position: absolute;
@@ -331,6 +391,16 @@
         <div class="final-card">
             <p class="final-message" id="finalMessageDisplay"></p>
             <p class="signature" id="signatureDisplay"></p>
+        </div>
+
+        <!-- Interactive Love Section -->
+        <div class="love-section">
+            <h2>Do you love me? ❤️</h2>
+            <div class="btn-group">
+                <button class="love-btn yes-btn" onclick="sayYes()">Yes! 🥰</button>
+                <button class="love-btn no-btn" id="noBtn" onmouseover="moveButton()">No 😢</button>
+            </div>
+            <p id="loveResponse" class="love-response"></p>
         </div>
     </div>
 
@@ -508,6 +578,40 @@
                 alert("URL Copied to clipboard!");
                 navigator.clipboard.writeText(window.location.href);
             }
+        }
+
+        // Interactive Love Logic
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const container = document.querySelector('.btn-group');
+            const rect = container.getBoundingClientRect();
+            
+            // Generate random position within the container bounds
+            const maxX = rect.width - btn.offsetWidth;
+            const maxY = 200; // Allow it to jump up/down a bit
+            
+            const x = Math.random() * (maxX - 10) + 5;
+            const y = (Math.random() * maxY) - (maxY/2);
+            
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function sayYes() {
+            const response = document.getElementById('loveResponse');
+            response.innerText = "I knew it! I love you too, Jeevi! ❤️🥰✨";
+            
+            // Extra confetti for the big Yes!
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff0000', '#ff69b4', '#ffffff']
+            });
+
+            // Reset "No" button position if it moved
+            document.getElementById('noBtn').style.position = 'static';
+            document.getElementById('noBtn').style.opacity = '0'; // Hide it after Yes
         }
     </script>
 </body>
