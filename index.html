@@ -80,6 +80,14 @@
             100% { transform: rotate(0deg); }
         }
 
+        @keyframes dance {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(2px, -2px) rotate(1deg); }
+            50% { transform: translate(-2px, 2px) rotate(-1deg); }
+            75% { transform: translate(2px, 2px) rotate(1deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
         /* Sections */
         .container {
             width: 100%;
@@ -283,6 +291,7 @@
             color: #666;
             position: absolute;
             transition: all 0.2s ease;
+            animation: dance 0.2s infinite;
         }
 
         .love-response {
@@ -583,18 +592,18 @@
         // Interactive Love Logic
         function moveButton() {
             const btn = document.getElementById('noBtn');
-            const container = document.querySelector('.btn-group');
-            const rect = container.getBoundingClientRect();
             
-            // Generate random position within the container bounds
-            const maxX = rect.width - btn.offsetWidth;
-            const maxY = 200; // Allow it to jump up/down a bit
+            // Generate random position within the entire viewport
+            const maxX = window.innerWidth - btn.offsetWidth;
+            const maxY = window.innerHeight - btn.offsetHeight;
             
-            const x = Math.random() * (maxX - 10) + 5;
-            const y = (Math.random() * maxY) - (maxY/2);
+            const x = Math.random() * (maxX - 20) + 10;
+            const y = Math.random() * (maxY - 20) + 10;
             
+            btn.style.position = 'fixed';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
+            btn.style.zIndex = '9999';
         }
 
         function sayYes() {
