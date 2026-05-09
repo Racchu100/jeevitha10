@@ -289,7 +289,7 @@
         .no-btn {
             background: #eee;
             color: #666;
-            position: absolute;
+            position: relative; /* Change from absolute to relative for initial layout */
             transition: all 0.2s ease;
             animation: dance 0.2s infinite;
         }
@@ -407,7 +407,7 @@
             <h2>Do you love me? ❤️</h2>
             <div class="btn-group">
                 <button class="love-btn yes-btn" onclick="sayYes()">Yes! 🥰</button>
-                <button class="love-btn no-btn" id="noBtn" onmouseover="moveButton()">No 😢</button>
+                <button class="love-btn no-btn" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No 😢</button>
             </div>
             <p id="loveResponse" class="love-response"></p>
         </div>
